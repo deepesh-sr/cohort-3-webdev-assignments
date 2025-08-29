@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            border: 2px solid black;
+            height: 100px;
+            width: 100px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="todo"> To Do
+        <div id="item" draggable="true">Go to gym</div>
+    </div>
+    <div class="box" id="inprogress"> In Progress</div>
+    <div class="box" id="underreview"> Under Review</div>
+    <div class="box" id="finished"> Finished </div>
+</body>
+<script>
+    let id = document.getElementById("item");
+    let boxes = document.querySelectorAll(".box");
+
+    id.addEventListener('dragstart',(e)=>{
+        e.dataTransfer.setData("text/plain",e.target.id);
+    })
+
+    boxes.forEach((box)=>{
+        box.addEventListener("dragover",(e)=>{
+            e.preventDefault();
+        })
+
+        box.addEventListener("drop",(e)=>{
+            e.preventDefault();
+            const id = e.dataTransfer.getData("text/plain");
+            const draggedElement = document.getElementById(id);
+            e.currentTarget.appendChild(draggedElement);
+        })
+    })
+</script>
+</html>

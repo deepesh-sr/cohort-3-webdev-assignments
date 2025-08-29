@@ -19,11 +19,11 @@ setInterval(() => {
 //creating a global middleware 
 app.use(function (req, res, next) {
   //get the user_id of the user
-  let userId = req.header["user-id"]; // as we are given user will give it id as "user-id"
+  let userId = req.headers["user-id"]; // as we are given user will give it id as "user-id"
   if (numberOfRequestsForUser[userId]) {
    numberOfRequestsForUser[userId] = numberOfRequestsForUser[userId] + 1;
     if (numberOfRequestsForUser[userId] > 5) {
-      res.status(404).send("No entry");
+      return res.status(404).send("No entry");
     } else {
       next()
     }

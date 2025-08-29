@@ -5,6 +5,13 @@ const app = express();
 
 function logRequests(req, res, next) {
     // write the logic for request log here
+    const timestamp = new Date().toISOString();
+    const method = req.method;
+    const url = req.url;
+    
+    console.log(`${method} ${url} - ${timestamp}`);
+    
+    next(); // Important: Call next() to continue to the next middleware/route
 }
 
 app.use(logRequests);
