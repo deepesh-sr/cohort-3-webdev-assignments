@@ -29,6 +29,7 @@ class Calculator {
     getResult(){
           return this.result;
     }
+    
     calculate(inputExpression) {
       const temp = inputExpression;
       const cleanedExpression = temp.replace(/\s+/g, '');

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+</style>
+<body>
+    <div class="box-container">
+        <div class="formbuilder">
+            <label for="input">Select Input Type</label>
+            <select name="input" id="input">
+                <option value="text">Text Input</option>
+                <option value="radio">Radio Input</option>
+            </select>
+            <input type="text" name="labelField" id="labelField" placeholder="Add Label for input field">
+            <button onclick="onclickforaddfieild()">Add Field</button>
+        </div>
+    </div>
+        <div class="preview" id="prev">
+
+        </div>
+</body>
+<script>
+    function onclickforaddfieild(){
+        let previewBox = document.getElementById('prev');
+        let outputfield = document.getElementById('input');
+        let selectedValue = outputfield.value; // Get the selected value properly
+        let labelField = document.getElementById('labelField');
+        let labelText = labelField.value;
+        
+        // Create label element
+        let newLabel = document.createElement("label");
+        newLabel.textContent = labelText || "Default Label";
+        
+        // Create input element
+        let newItem = document.createElement("input");
+        newItem.type = selectedValue; // Use the correct variable
+        newItem.placeholder = labelText;
+        
+        // Add them to preview
+        previewBox.appendChild(newLabel);
+        previewBox.appendChild(newItem);
+        previewBox.appendChild(document.createElement("br")); // Line break
+        
+        // Clear the label field
+        labelField.value = "";
+    }
+
+
+</script>
+</html>

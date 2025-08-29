@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="root" id="rootdiv">
+        <button id="button" onclick="addbutton()">Add Button</button>
+        <input type="text" style="border: 2px black;" id="text" >
+    </div>
+</body>
+<script>
+    let root = document.getElementById("rootdiv");
+    let button = document.getElementById("button");
+
+
+    function addbutton(){
+        let colorbutton = document.createElement("button");
+        let textbox = document.getElementById("text")
+        if (textbox.value != ""){
+            console.log(textbox.value)
+            colorbutton.textContent = textbox.value;
+            colorbutton.addEventListener("click", handlebutton);
+            root.appendChild(colorbutton);
+            textbox.value = ""
+        }
+        
+    }
+
+    function handlebutton(e){
+        console.log(e.target.textContent)
+        
+        root.style.backgroundColor = e.target.textContent
+    }
+</script>
+</html>

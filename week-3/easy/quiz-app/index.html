@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="data.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1 id="head"></h1>
+        <ol id="list" type="a">
+            <li><input type="radio" name="answer" value="a" id="radio-a"><label for="radio-a" id="a"></label></li>
+            <li><input type="radio" name="answer" value="b" id="radio-b"><label for="radio-b" id="b"></label></li>
+            <li><input type="radio" name="answer" value="c" id="radio-c"><label for="radio-c" id="c"></label></li>
+            <li><input type="radio" name="answer" value="d" id="radio-d"><label for="radio-d" id="d"></label></li>
+        </ol>
+        <button id="prev">Previous</button>
+        <button id="submit">Submit</button>
+        <button id="next">Next</button>
+    </div>
+
+</body>
+<script>
+    let id = document.getElementById("root");
+    let head = document.getElementById("head");
+    let list = document.getElementById("list");
+    let optiona = document.getElementById("a")
+    let optionb = document.getElementById("b")
+    let optionc = document.getElementById("c")
+    let optiond = document.getElementById("d")
+    let nextbutton = document.getElementById("next");
+
+    let prevbutton = document.getElementById("prev")
+
+    let submitButton = document.getElementById("submit");
+
+    // console.log(quizData)
+    let iterationlength = quizData.length;
+    let currentIndex = 0;
+    let score = 0;
+    let userAnswers = []; // Store user's answers
+
+    // Get selected answer
+    function getSelectedAnswer() {
+        const selectedRadio = document.querySelector('input[name="answer"]:checked');
+        return selectedRadio ? selectedRadio.value : null;
+    }
+
+    // Clear radio button selections
+    function clearSelections() {
+        const radios = document.querySelectorAll('input[name="answer"]');
+        radios.forEach(radio => radio.checked = false);
+    }
+
+    // Save current answer and move to next
+    function saveAndNext() {
+        const selectedAnswer = getSelectedAnswer();
+        userAnswers[currentIndex] = selectedAnswer; // Save answer
+        
+        if (currentIndex < iterationlength - 1) {
+            currentIndex++;
+            questionIteration();
+            
+            // Restore previous selection if exists
+            if (userAnswers[currentIndex]) {
+                document.querySelector(`input[value="${userAnswers[currentIndex]}"]`).checked = true;
+            }
+        }
+    }
+
+    // Save current answer and move to previous
+    function saveAndPrev() {
+        const selectedAnswer = getSelectedAnswer();
+        userAnswers[currentIndex] = selectedAnswer; // Save answer
+        
+        if (currentIndex > 0) {
+            currentIndex--;
+            questionIteration();
+            
+            // Restore previous selection if exists
+            if (userAnswers[currentIndex]) {
+                document.querySelector(`input[value="${userAnswers[currentIndex]}"]`).checked = true;
+            }
+        }
+    }
+
+    submitButton.addEventListener('click', () => {
+        // Save current answer
+        const selectedAnswer = getSelectedAnswer();
+        userAnswers[currentIndex] = selectedAnswer;
+        
+        // Calculate score
+        score = 0;
+        for (let i = 0; i < quizData.length; i++) {
+            if (userAnswers[i] === quizData[i].correct) {
+                score++;
+            }
+        }
+        
+        alert(`Quiz completed! Your score: ${score}/${quizData.length}`);
+        console.log("User answers:", userAnswers);
+        console.log("Correct answers:", quizData.map(q => q.correct));
+    })
+
+    nextbutton.addEventListener('click', saveAndNext)
+
+    prevbutton.addEventListener('click', saveAndPrev)
+
+    function questionIteration() {
+        let item = quizData[currentIndex];  // Get the actual question object
+        head.textContent = item.question
+        optiona.textContent = item.a
+        optionb.textContent = item.b
+        optionc.textContent = item.c
+        optiond.textContent = item.d
+        
+        // Clear selections for new question
+        clearSelections();
+    }
+    questionIteration()
+
+</script>
+
+</html>
